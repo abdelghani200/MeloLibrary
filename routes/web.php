@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -29,3 +29,13 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::view('/about', 'about')->name('about');
+Route::view('/contact', 'contact')->name('contact');
+Route::view('/music', 'music')->name('music');
+
+Route::resource('categories', \App\Http\Controllers\CategoryController::class);
+Route::resource('musics', \App\Http\Controllers\MusicController::class);
+Route::get('musics/{mu}', [\App\Http\Controllers\MusicController::class, 'show'])->name('music.show');
