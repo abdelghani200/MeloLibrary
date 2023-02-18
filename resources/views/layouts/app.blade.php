@@ -9,6 +9,7 @@
 
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.ico') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/about.css') }}" rel="stylesheet" />
@@ -21,6 +22,8 @@
     <link href="{{ asset('css/owl.carousel.css') }}" rel="stylesheet" />
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/about.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/contact.css') }}">
     <!-- CSRF Token -->
 
 
@@ -29,21 +32,48 @@
 
 <body class="font-sans antialiased">
     <!-- Responsive navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#!">Crud Laravel</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <a class="navbar-brand" href="#!">
+                <img src="{{ asset ('logo.jpg') }}" alt="Logo" style="width: 90px;height:50px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" style="color: black;" href="{{ route('home') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" style="color: black;" href="{{ route('about') }}">About</a></li>
+                    <li class="nav-item"><a class="nav-link" style="color: black;" href="{{ route('contact') }}">Contact</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    
+    <body class="font-sans antialiased">
+        <div class="min-h-screen bg-gray-100">
+
+
+            <!-- Page Heading -->
+            <header class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <h1 class="text-3xl font-bold leading-tight text-gray-900">
+                        {{ $header ?? config('app.name') }}
+                    </h1>
+                </div>
+            </header>
+
+
+            <!-- Page Content -->
+            <main>
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $slot ?? config('app.name') }}
+                </div>
+            </main>
+        </div>
+    </body>
+
+
     @yield('content')
 
 

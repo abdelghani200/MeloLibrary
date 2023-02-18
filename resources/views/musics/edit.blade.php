@@ -1,3 +1,5 @@
+<section class="mb-4">
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -26,9 +28,13 @@
                                 <label for="category_id">Category:</label>
                                 <select name="category_id" class="form-control">
                                     @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}" @selected($category->id == $post->category_id)>{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}" @selected($category->id == $music->category_id)>{{ $category->name }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="audio" class="form-label">Audio:</label>
+                                <input type="file" name="audio" class="form-control" id="audio" placeholder="audio">
                             </div>
                             <div class="form-group">
                                 <label for="artiste">Artiste:</label>
@@ -59,3 +65,5 @@
     </div>
 
 </x-app-layout>
+
+</section>
