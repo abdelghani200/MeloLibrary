@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Music;
+use App\Models\Rating;
+
+use App\Models\Comment;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 
 class MusicController extends Controller
@@ -16,7 +20,7 @@ class MusicController extends Controller
     public function index()
     {
         $musicx = Music::latest()->paginate(8);
-        
+
 
         return view('musics.index', compact('musicx'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -38,6 +42,7 @@ class MusicController extends Controller
     {
         $request->validate([
             'title' => 'required',
+            'audio' => 'required|mimes:mp3,wav,ogg|max:4096',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'artiste' => 'required',
             'ecrivain' => 'required',
@@ -57,6 +62,13 @@ class MusicController extends Controller
             $input['image'] = "$profileImage";
         }
 
+        if ($audio = $request->file('audio')) {
+            $destinationPath = 'images/audio';
+            $profileAudio = date('YmdHis') . "." . $audio->getClientOriginalExtension();
+            $audio->move($destinationPath, $profileAudio);
+            $input['audio'] = "$profileAudio";
+        }
+
         Music::create($input);
 
         return redirect()->route('musics.index')->with('success', 'Music created successfully.');
@@ -67,15 +79,32 @@ class MusicController extends Controller
      */
     public function show(Music $music)
     {
-        return view('morceau', compact('music'));
+        // return view('morceau', compact('music'));
+        $comments = Comment::where('id', $music->id)->get();
+        return view('morceau', compact('music', 'comments'));
     }
+
+    public function rate(Request $request, $id)
+    {
+        $music = Music::find($id);
+        $rating = new Rating();
+        $rating->music_id = $id;
+        $rating->user_id = Auth::id();
+        $rating->rating = $request->input('rating');
+        $rating->save();
+        return redirect()->route('music.show', $music)->with('success', 'Rating added successfully.');
+    }
+
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Music $music)
+    public function edit($id)
     {
-        return view('musics.edit', compact('music'));
+        // return view('musics.edit', compact('music'));
+        $music = Music::find($id);
+        $categories = Category::all();
+        return view('musics.edit', compact('music', 'categories'));
     }
 
     /**
@@ -85,6 +114,7 @@ class MusicController extends Controller
     {
         $request->validate([
             'title' => 'required',
+            'audio' => 'required|mimes:mp3,wav,ogg|max:4096',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'artiste' => 'required',
             'ecrivain' => 'required',
@@ -101,6 +131,13 @@ class MusicController extends Controller
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);
             $input['image'] = "$profileImage";
+        }
+
+        if ($audio = $request->file('audio')) {
+            $destinationPath = 'images/audio';
+            $profileAudio = date('YmdHis') . "." . $audio->getClientOriginalExtension();
+            $audio->move($destinationPath, $profileAudio);
+            $input['audio'] = "$profileAudio";
         }
 
         $music->update($input);

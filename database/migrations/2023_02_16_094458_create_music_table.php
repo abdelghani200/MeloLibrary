@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('titre');
             $table->string('image');
+            $table->string('audio');
             $table->string('artiste');
             $table->string('ecrivain');
             $table->string('langue');
