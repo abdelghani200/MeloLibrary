@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::get('/accueil', function () {
+    return view('accueil');
+});
 
 
 
@@ -39,3 +41,6 @@ Route::view('/music', 'music')->name('music');
 Route::resource('categories', \App\Http\Controllers\CategoryController::class);
 Route::resource('musics', \App\Http\Controllers\MusicController::class);
 Route::get('musics/{mu}', [\App\Http\Controllers\MusicController::class, 'show'])->name('music.show');
+Route::resource('comments', \App\Http\Controllers\CommentController::class);
+
+Route::get('/music/{id}/rate/{stars}', [\App\Http\Controllers\MusicController::class, 'rate'])->name('music.rate');
