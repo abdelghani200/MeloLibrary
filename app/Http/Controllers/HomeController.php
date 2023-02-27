@@ -12,9 +12,14 @@ class HomeController extends Controller
     {
 
         $categories = Category::all();
-        $musicx = Music::all();
+        $musicx = Music::when(request('category_id'),function($query) {
+            $query->where('category_id', request('category_id'));
+        })->latest()->get();
 
 
         return view('index', compact('categories','musicx'));
     }
+    
+
 }
+
