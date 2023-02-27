@@ -9,5 +9,18 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['body'];
+    protected $fillable = ['body','music_id','user_id'];
+
+
+    public function music()
+    {
+        return $this->belongsTo(Music::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
+
 }
