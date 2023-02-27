@@ -30,9 +30,9 @@
                                     <td>{{ ++$i }}</td>
                                     <td>{{ $category->name }}</td>
                                     <td>{{ $category->description }}</td>
-                                    <td><img src="/images/categories/{{ $category->image }}"></td>
+                                    <td><img  src="/images/categories/{{ $category->image }}" style="width:70px;height:70px;border-radius: 50px;"></td>
                                     <td class="d-flex text-center" style="justify-content: center;">
-                                        <a class="btn btn-primary" href="{{ route('categories.edit', $category) }}">Update</a>
+                                        <a class="btn btn-primary" style="height: 38px;" href="{{ route('categories.edit', $category) }}">Update</a>
                                         <form method="POST" action="{{ route('categories.destroy', $category) }}">
                                             @csrf
                                             @method('DELETE')

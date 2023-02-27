@@ -1,45 +1,56 @@
 @extends('layouts.app')
 
-@section('content')
+
 <section class="mb-4">
+
+    <div class="container text-center">
+        <form action="{{ route('search') }}" method="GET">
+            <div class="input-group">
+                <div class="form-outline">
+                    <input type="search" id="form1" class="form-control" placeholder="Search" name="search" />
+                </div>
+                <button type="submit" class="btn btn-info" style="height: 38px;">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+
     <div class="container">
         <div class="row">
+    
             <div class="col-md-8">
-                <!-- <h1 class="my-4">Welcome to Workshop Laravel!
-                <small>Welcome to homepage!!!</small>
-            </h1> -->
                 @foreach ($musicx as $mu)
-                <div class="card mb-4">
+
+                <div class="card mb-4" style="height:200px;">
                     <div class="card-body" style="width: auto;">
                         <div class="row">
                             <div class="col-md-4">
                                 <a href="{{ route('music.show', $mu->id) }}">
-                                    <img class="img-fluid rounded" src="/images/music/{{ $mu->image }}" alt="..." />
+                                    <img class="img-fluid rounded" style="width:300px;height:170px;" src="/images/music/{{ $mu->image }}" alt="..." />
                                 </a>
-                                <audio controls>
-                                    <source src="/images/audio/{{ $mu->audio }}" type="audio/mpeg">
-                                    Your browser does not support the audio element.
-                                </audio>
                             </div>
                             <div class="col-md-8">
                                 <h2 class="card-title">{{ $mu->title }}</h2>
-                                <p class="card-text">{{ $mu->artiste }}</p>
-                                <p class="card-text"><small class="text-muted">{{ $mu->created_at }}</small></p>
-                                <!-- <div class="stars">
-                                    <a href="{{ route('music.rate', ['id' => $mu->id, 'stars' => 1]) }}"><i class="fas fa-star"></i></a>
-                                    <a href="{{ route('music.rate', ['id' => $mu->id, 'stars' => 2]) }}"><i class="fas fa-star"></i></a>
-                                    <a href="{{ route('music.rate', ['id' => $mu->id, 'stars' => 3]) }}"><i class="fas fa-star"></i></a>
-                                    <a href="{{ route('music.rate', ['id' => $mu->id, 'stars' => 4]) }}"><i class="fas fa-star"></i></a>
-                                    <a href="{{ route('music.rate', ['id' => $mu->id, 'stars' => 5]) }}"><i class="fa-regular fa-star"></i></a>
-                                </div> -->
-
-                                <div class="stars">
-                                    @for($i = 1; $i <= 5; $i++) @if($i <=$mu->avg_rating)
-                                        <i class="fas fa-star rated" data-rating="{{ $i }}"></i>
-                                        @else
-                                        <i class="far fa-star" data-rating="{{ $i }}"></i>
-                                        @endif
-                                        @endfor
+                                <p class="card-text"><small class="text-muted">{{ date("M j, Y", strtotime($mu->created_at)); }} | </small> {{ floor($mu->duree_sec/60) }} : {{ gmdate("s", $mu->duree_sec) }} </p>
+                                <audio controls style="width:100%;">
+                                    <source src="/images/audio/{{ $mu->audio }}" type="audio/mpeg">
+                                </audio>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <div class="stars">
+                                        @for($i = 1; $i <= 5; $i++) @if($i <=$mu->avg_rating)
+                                            <i class="fas fa-star rated" data-rating="{{ $i }}"></i>
+                                            @else
+                                            <i class="far fa-star" data-rating="{{ $i }}"></i>
+                                            @endif
+                                            @endfor
+                                            <span style="color: gray;">Like (29)</span>
+                                    </div>
+                                    <div class="items_dy">
+                                        <i class="fa-regular fa-share-from-square"></i><span style="color: gray;">Share(04)</span>
+                                    </div>
                                 </div>
 
                                 <style>
@@ -81,16 +92,14 @@
                                         });
                                     });
                                 </script>
-
-
-
-
                             </div>
                         </div>
                     </div>
                 </div>
+
                 @endforeach
             </div>
+            
             <div class="col-md-4">
                 <div class="card my-4">
                     <h5 class="card-header">All Music</h5>
@@ -110,4 +119,3 @@
         </div>
     </div>
 </section>
-@endsection

@@ -31,11 +31,11 @@
 </head>
 
 <body class="font-sans antialiased">
-    <!-- Responsive navbar-->
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-light fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#!">
-                <img src="{{ asset ('logo.jpg') }}" alt="Logo" style="width: 90px;height:50px;">
+                <img src="{{ asset('logo.jpg') }}" alt="Logo" style="width: 90px; height: 50px;">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -45,12 +45,28 @@
                     <li class="nav-item"><a class="nav-link" style="color: black;" href="{{ route('home') }}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" style="color: black;" href="{{ route('about') }}">About</a></li>
                     <li class="nav-item"><a class="nav-link" style="color: black;" href="{{ route('contact') }}">Contact</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" style="color: black;" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ Auth::user()->name }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Profile') }}</a></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">{{ __('Log Out') }}</a>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <body class="font-sans antialiased">
+
+
+    <div class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
 
 
@@ -58,7 +74,7 @@
             <header class="bg-white shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <h1 class="text-3xl font-bold leading-tight text-gray-900">
-                        {{ $header ?? config('app.name') }}
+                        {{ $header ?? '' }}
                     </h1>
                 </div>
             </header>
@@ -66,25 +82,16 @@
 
             <!-- Page Content -->
             <main>
+                @yield('content')
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $slot ?? config('app.name') }}
+                    {{ $slot ?? '' }}
                 </div>
             </main>
         </div>
-    </body>
-
-
-    @yield('content')
-
-
+    </div>
 
 
     <!-- Footer-->
-    <!-- <footer class="py-5 bg-dark fixed-bottom">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Your Website Jelouani_Abdelghani@Youcode_Safi 2023</p>
-        </div>
-    </footer> -->
 
 
 

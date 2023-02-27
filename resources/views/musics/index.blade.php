@@ -24,7 +24,7 @@
                                     <th>Langue</th>
                                     <th>Date_Sortie</th>
                                     <th>Duree</th>
-                                    <th>Image</th>
+                                    <th class="text-center">Image</th>
                                     
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -39,9 +39,9 @@
                                     <td>{{ $mu->langue }}</td>
                                     <td>{{ $mu->date_sortie }}</td>
                                     <td>{{ $mu->durée }}</td>
-                                    <td><img src="/images/music/{{ $mu->image }}"></td>
+                                    <td class="text-center"><img src="/images/music/{{ $mu->image }}" style="width:70px;height:70px;border-radius: 50px;"></td>
                                     <td class="d-flex text-center" style="justify-content: center;">
-                                        <a class="btn btn-primary" href="{{ route('musics.edit', $mu) }}">Update</a>
+                                        <a class="btn btn-info" style="height: 38px;" href="{{ route('musics.edit', $mu) }}">Update</a>
                                         <form method="POST" action="{{ route('musics.destroy', $mu) }}">
                                             @csrf
                                             @method('DELETE')

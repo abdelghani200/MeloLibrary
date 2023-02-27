@@ -1,4 +1,10 @@
 <x-guest-layout>
+    <div class="video">
+        <video autoplay muted loop id="myVideo">
+            <source src="{{ asset('Concert.mp4') }}" type="video/mp4">
+        </video>
+        <div id="videoDarkOverlay"></div>
+    </div>
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -20,10 +26,7 @@
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -32,9 +35,7 @@
         <div class="mt-4">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+            <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
@@ -50,3 +51,16 @@
         </div>
     </form>
 </x-guest-layout>
+
+
+<style>
+    #videoDarkOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        /* background-color: rgba(0, 0, 0, 0.65); */
+        z-index: -1;
+    }
+</style>

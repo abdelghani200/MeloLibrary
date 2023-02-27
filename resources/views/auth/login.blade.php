@@ -1,4 +1,10 @@
 <x-guest-layout>
+    <div class="video">
+        <video autoplay muted loop id="myVideo">
+            <source src="{{ asset('Concert.mp4') }}" type="video/mp4">
+        </video>
+        <div id="videoDarkOverlay"></div>
+    </div>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -16,10 +22,7 @@
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -34,9 +37,9 @@
 
         <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
+            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
+                {{ __('Forgot your password?') }}
+            </a>
             @endif
 
             <x-primary-button class="ml-3">
@@ -45,3 +48,15 @@
         </div>
     </form>
 </x-guest-layout>
+
+
+<style>
+#videoDarkOverlay {
+    position: fixed;
+    top: 0;        
+    left: 0;
+    width: 100vw;   
+    height: 100vh;  
+    z-index: -1;
+}
+</style>

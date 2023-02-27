@@ -17,6 +17,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Title</th>
+                                    <th>Effectue Le</th>
+                                    <th>Nom User</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -25,8 +27,10 @@
                                 <tr>
                                     <td>{{ ++$i }}</td>
                                     <td>{{ $comment->body }}</td>
+                                    <td>{{ $comment->created_at }}</td>
+                                    <td>{{ $comment->user->name }}</td>
                                     <td class="d-flex text-center" style="justify-content: center;">
-                                        <a class="btn btn-primary" href="{{ route('comments.edit', $comment) }}">Update</a>
+                                        <a class="btn btn-primary" style="height: 38px;" href="{{ route('comments.edit', $comment) }}">Update</a>
                                         <form method="POST" action="{{ route('comments.destroy', $comment) }}">
                                             @csrf
                                             @method('DELETE')
