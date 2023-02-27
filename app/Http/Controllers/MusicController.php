@@ -17,12 +17,22 @@ class MusicController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    public function index(Request $request)
     {
-        $musicx = Music::latest()->paginate(8);
+        $search = $request->get('search');
 
-
-        return view('musics.index', compact('musicx'))->with('i', (request()->input('page', 1) - 1) * 5);
+        if (!empty($search)) {
+            $musicx = Music::where('title', 'like', '%' . $search . '%')
+                ->orWhere('artiste', 'like', "%$search%")
+                ->get();
+            $categories = Category::all();
+            return view('index', compact('categories','musicx','search'));
+        } else {
+            $musicx = Music::latest()->paginate(8);
+            $categories = Category::all();
+            return view('index', compact('musicx', 'categories'))->with('i', (request()->input('page', 1) - 1) * 5);
+        }
     }
 
     /**
