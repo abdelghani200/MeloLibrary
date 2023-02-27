@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Music;
 use App\Models\Comment;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
 
 class CommentController extends Controller
 {
@@ -16,10 +17,17 @@ class CommentController extends Controller
     {
 
         $comments = Comment::latest()->paginate(5);
-        // dd($categories);
-
         return view('comments.index', compact('comments'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
+
+    public function index_1()
+    {
+        $musics = Music::with('comments')->get();
+
+        return view('morceau', compact('musics'));
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -28,6 +36,7 @@ class CommentController extends Controller
     {
         //
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -41,6 +50,8 @@ class CommentController extends Controller
         Comment::create([
             'body' => $validatedData['body'],
         ]);
+
+
 
         return redirect()->back();
     }
