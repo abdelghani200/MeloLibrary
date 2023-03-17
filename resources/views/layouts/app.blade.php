@@ -15,6 +15,10 @@
     <link href="{{ asset('css/about.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/app1.css') }}" rel="stylesheet" />
 
+    <!-- mon style  -->
+
+    <link rel="stylesheet" href="{{asset('css/index.css')}}">
+
     <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/style-color.css') }}" rel="stylesheet" />
@@ -45,6 +49,9 @@
                     <li class="nav-item"><a class="nav-link" style="color: black;" href="{{ route('home') }}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" style="color: black;" href="{{ route('about') }}">About</a></li>
                     <li class="nav-item"><a class="nav-link" style="color: black;" href="{{ route('contact') }}">Contact</a></li>
+                    @if( Auth::user()->is_admin)
+                    <li class="nav-item"><a class="nav-link" style="color: black;" href="{{ route('dashboard') }}">Dashboard</a></li>
+                    @endif
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" style="color: black;" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ Auth::user()->name }}
@@ -93,7 +100,8 @@
 
     <!-- Footer-->
 
-
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

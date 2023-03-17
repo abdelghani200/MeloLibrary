@@ -31,19 +31,26 @@
     <div class="col-lg-8">
       <h3 class="mb-3">Comments</h3>
       @foreach($comments as $comment)
+      
       <div class="card shadow-sm mb-3">
         <div class="card-body">
-          <h5 class="card-title">Comment by <span style="color: blue;"> {{ $comment->user->name  }} </span> </h5>
+          <h5 class="card-title">Comment by <span style="color: blue;"> {{ $comment->user->name }} </span> </h5>
           <p class="card-text">{{ $comment->body }}</p>
         </div>
       </div>
+      
       @endforeach
+
+      @if(session('success'))
+      <div class="alert alert-success">{{ session('success') }}</div>
+      @endif
       <div class="card shadow-sm mb-3">
         <div class="card-body">
           <h5 class="card-title">Add Comment</h5>
-          <form method="POST" action="{{ route('comments.store') }}">
+          <form method="POST" action="{{ route('comments.store', ['music' => $music->id]) }}">
             @csrf
             <input type="hidden" name="music_id" value="{{ $music->id }}" />
+            <input type="hidden" name="user_id" value="{{ Auth::id() }}" />
             <div class="form-group">
               <label for="comment-textarea">Your comment:</label>
               <textarea class="form-control" id="comment-textarea" name="body" rows="4" placeholder="Enter your comment here..."></textarea>
@@ -56,4 +63,3 @@
   </div>
 
 </div>
-
