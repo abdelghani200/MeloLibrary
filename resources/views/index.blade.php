@@ -4,10 +4,10 @@
 <section class="mb-4">
 
     <div class="container text-center">
-        <form action="{{ route('search') }}" method="GET">
+        <form id="search-form" action="{{ route('search') }}" method="GET">
             <div class="input-group">
                 <div class="form-outline">
-                    <input type="search" id="form1" class="form-control" placeholder="Search" name="search" />
+                    <input type="search" id="search" class="form-control" placeholder="Search" name="search" />
                 </div>
                 <button type="submit" class="btn btn-info" style="height: 38px;">
                     <i class="fas fa-search"></i>
@@ -16,11 +16,9 @@
         </form>
     </div>
 
-
-
     <div class="container">
         <div class="row">
-    
+
             <div class="col-md-8">
                 @foreach ($musicx as $mu)
 
@@ -67,31 +65,8 @@
                                     }
                                 </style>
 
-                                <script>
-                                    const stars = document.querySelectorAll('.stars i');
-                                    const storageKey = 'music_rating_' + '{{ $mu->id }}';
-                                    const storedRating = localStorage.getItem(storageKey);
-                                    if (storedRating) {
-                                        stars.forEach(star => {
-                                            if (star.getAttribute('data-rating') <= storedRating) {
-                                                star.classList.add('active');
-                                            }
-                                        });
-                                    }
-                                    stars.forEach(star => {
-                                        star.addEventListener('click', () => {
-                                            const rating = star.getAttribute('data-rating');
-                                            stars.forEach(s => {
-                                                if (s.getAttribute('data-rating') <= rating) {
-                                                    s.classList.add('active');
-                                                } else {
-                                                    s.classList.remove('active');
-                                                }
-                                            });
-                                            localStorage.setItem(storageKey, rating);
-                                        });
-                                    });
-                                </script>
+                               
+
                             </div>
                         </div>
                     </div>
@@ -99,7 +74,14 @@
 
                 @endforeach
             </div>
-            
+
+            <!-- Pagination -->
+
+            <!-- Pagination -->
+            @if ($musicx instanceof Illuminate\Pagination\LengthAwarePaginator)
+            {{ $musicx->links() }}
+            @endif
+
             <div class="col-md-4">
                 <div class="card my-4">
                     <h5 class="card-header">All Music</h5>
