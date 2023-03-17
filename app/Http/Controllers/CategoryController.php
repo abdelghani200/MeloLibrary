@@ -75,9 +75,9 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $request->validate([
-            'name' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'description' => 'required',
+            'name' => 'sometimes',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'description' => 'sometimes',
         ]);
 
         $input = $request->all();
@@ -89,7 +89,10 @@ class CategoryController extends Controller
             $input['image'] = "$profileImage";
         }
 
-        $category->update($input);
+        // $category->update($input);
+
+        $category->fill($input);
+        $category->save();
 
 
         return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
