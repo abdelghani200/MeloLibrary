@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('music_id');
             $table->foreign('music_id')->references('id')->on('music');
             $table->string('body');
+            $table->string('status');
             $table->timestamps();
         });
     }
