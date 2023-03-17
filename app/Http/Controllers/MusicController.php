@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Artiste;
+use App\Models\Bande;
 use App\Models\Music;
 use App\Models\Rating;
 
@@ -18,7 +20,17 @@ class MusicController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index(Request $request)
+
+    public function index()
+    {
+        $musicx = Music::latest()->paginate(5);
+
+        return view('musics.index', compact('musicx'))->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
+
+
+    public function rechercher(Request $request)
     {
         $search = $request->get('search');
 
@@ -27,7 +39,7 @@ class MusicController extends Controller
                 ->orWhere('artiste', 'like', "%$search%")
                 ->get();
             $categories = Category::all();
-            return view('index', compact('categories','musicx','search'));
+            return view('index', compact('categories', 'musicx', 'search'));
         } else {
             $musicx = Music::latest()->paginate(8);
             $categories = Category::all();
@@ -35,14 +47,18 @@ class MusicController extends Controller
         }
     }
 
+
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
         $categories = Category::all();
+        $artistes = Artiste::all();
+        $bandes = Bande::all();
 
-        return view('musics.create', compact('categories'));
+        return view('musics.create', compact('categories', 'artistes', 'bandes'));
     }
 
     /**
@@ -105,34 +121,51 @@ class MusicController extends Controller
         return redirect()->route('music.show', $music)->with('success', 'Rating added successfully.');
     }
 
+    public function showComments(Music $music)
+    {
+        $comments = $music->comments()->where('music_id', $music->id)->where('status', 'approved')->latest()->get();
+        // $comments = Comment::where('status', 'approved')->get();
+        return view('morceau', compact('music', 'comments'));
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)
     {
-        // return view('musics.edit', compact('music'));
-        $music = Music::find($id);
+
         $categories = Category::all();
-        return view('musics.edit', compact('music', 'categories'));
+        $music = Music::find($id);
+        $bandes = Bande::all();
+        $artistes = Artiste::all();
+
+        $selectedArtist = $music->artiste_id ?: $music->bande_id;
+
+        return view('musics.edit', compact('music', 'categories', 'bandes', 'artistes'))->with('selectedArtist', $selectedArtist);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storage. sometimes
      */
     public function update(Request $request, Music $music)
     {
+
+
+
         $request->validate([
-            'title' => 'required',
-            'audio' => 'required|mimes:mp3,wav,ogg|max:4096',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'artiste' => 'required',
-            'ecrivain' => 'required',
-            'category_id' => 'required',
-            'langue' => 'required',
-            'date_sortie' => 'required',
-            'durée' => 'required',
+            'title' => 'sometimes',
+            'audio' => 'sometimes|mimes:mp3,wav,ogg|max:4096',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'artiste' => 'sometimes',
+            'ecrivain' => 'sometimes',
+            'category_id' => 'sometimes',
+            'langue' => 'sometimes',
+            'date_sortie' => 'sometimes',
+            'durée' => 'sometimes',
         ]);
+
 
         $input = $request->all();
 
@@ -150,7 +183,8 @@ class MusicController extends Controller
             $input['audio'] = "$profileAudio";
         }
 
-        $music->update($input);
+        $music->fill($input);
+        $music->save();
 
 
         return redirect()->route('musics.index')->with('success', 'Music updated successfully.');
