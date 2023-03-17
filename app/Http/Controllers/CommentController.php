@@ -6,6 +6,7 @@ use App\Models\Music;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\RedirectResponse;
 
 class CommentController extends Controller
@@ -17,16 +18,9 @@ class CommentController extends Controller
     {
 
         $comments = Comment::latest()->paginate(5);
+        // dd($comments);
         return view('comments.index', compact('comments'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
-
-    public function index_1()
-    {
-        $musics = Music::with('comments')->get();
-
-        return view('morceau', compact('musics'));
-    }
-
 
 
     /**
@@ -47,13 +41,20 @@ class CommentController extends Controller
             'body' => 'required|max:255',
         ]);
 
-        Comment::create([
+        $comment = new Comment([
             'body' => $validatedData['body'],
+            'status' => 'pending'
         ]);
 
+        $user = User::findOrFail($request->input('user_id'));
+        $comment->user()->associate($user);
 
+        $music = Music::findOrFail($request->input('music_id'));
+        $comment->music()->associate($music);
 
-        return redirect()->back();
+        $comment->save();
+
+        return redirect()->back()->with('success', 'Your comment has been added successfully and is awaiting approval.');;
     }
 
     /**
@@ -77,14 +78,20 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+        $comment->status = $request->input('status');
+        $comment->save();
+
+        return redirect()->route('comments.index')->with('success', 'Commentaire approuvé.');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+
+        return redirect()->back();
     }
 }
