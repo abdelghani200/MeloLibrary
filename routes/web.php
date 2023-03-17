@@ -32,13 +32,13 @@ Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->nam
 Route::view('/', 'accueil')->name('accueil');
 Route::view('/about', 'about')->name('about');
 Route::view('/contact', 'contact')->name('contact');
-Route::view('/music', 'music')->name('music');
+// Route::view('/music', 'music')->name('music');
 
 
 
 Route::get('/music/{id}/rate/{stars}', [\App\Http\Controllers\MusicController::class, 'rate'])->name('music.rate');
 
-Route::put('/comments/{comment}/approve', [\App\Http\Controllers\CommentController::class, 'approve'])->name('comments.approve');
+// Route::put('/comments/{comment}/approve', [\App\Http\Controllers\CommentController::class, 'approve'])->name('comments.approve');
 
 
 Route::get('/login', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'create'])->name('login');
@@ -46,9 +46,30 @@ Route::get('/register', [\App\Http\Controllers\Auth\RegisteredUserController::cl
 Route::post('/register', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'store']);
 
 
-Route::get('/search', [App\Http\Controllers\MusicController::class, 'index'])->name('search');
+Route::get('/search', [App\Http\Controllers\MusicController::class, 'rechercher'])->name('search');
 
 Route::resource('categories', \App\Http\Controllers\CategoryController::class);
 Route::resource('musics', \App\Http\Controllers\MusicController::class);
+
 Route::get('musics/{mu}', [\App\Http\Controllers\MusicController::class, 'show'])->name('music.show');
 Route::resource('comments', \App\Http\Controllers\CommentController::class);
+
+
+Route::post('/musics/{music}/comments', [\App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
+
+
+Route::get('/musics/{music}', [\App\Http\Controllers\MusicController::class, 'showComments'])->name('musics.show');
+
+
+Route::resource('artistes', \App\Http\Controllers\ArtisteController::class);
+
+Route::resource('bandes',\App\Http\Controllers\BandeController::class);
+
+Route::post('/music/{id}/rate', [MusicController::class, 'rate'])->name('music.rate');
+
+
+
+
+
+
+
