@@ -45,6 +45,28 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body" style="height: 180px;">
+                        <h5 class="card-title">All Artistes</h5>
+                        <p class="card-text" style="position: absolute;top: 90px;font-size:2rem">10</p>
+                        <div class="user">
+                            <a href="{{ route('artistes.index') }}" style="position: absolute;top: 90px;right: 20px;font-size:2rem"><i class="fa-solid fa-user"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body" style="height: 180px;">
+                        <h5 class="card-title">All Bandes</h5>
+                        <p class="card-text" style="position: absolute;top: 90px;font-size:2rem">10</p>
+                        <div class="user">
+                            <a href="{{ route('bandes.index') }}" style="position: absolute;top: 90px;right: 20px;font-size:2rem"><i class="fa-solid fa-people-group"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
