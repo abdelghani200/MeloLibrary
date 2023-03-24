@@ -110,16 +110,22 @@ class MusicController extends Controller
         return view('morceau', compact('music', 'comments'));
     }
 
-    public function rate(Request $request, $id)
+    public function rate($id, $stars)
     {
-        $music = Music::find($id);
+        $music = Music::findOrFail($id);
+
         $rating = new Rating();
-        $rating->music_id = $id;
+        $rating->music_id = $music->id;
         $rating->user_id = Auth::id();
-        $rating->rating = $request->input('rating');
+        $rating->rating = $stars;
         $rating->save();
-        return redirect()->route('music.show', $music)->with('success', 'Rating added successfully.');
+
+        $music->avg_rating = $music->ratings()->avg('rating');
+        $music->save();
+
+        return redirect()->back();
     }
+
 
     public function showComments(Music $music)
     {
