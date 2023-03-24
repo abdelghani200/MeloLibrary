@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Music;
 use App\Models\Category;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
 
 class CategoryController extends Controller
 {
@@ -101,8 +102,18 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy(Category $category)
     {
+        // // Get all child music records associated with the category
+        // $music = Music::where('category_id', $category->id)->get();
+
+        // // Delete the child music records
+        // foreach ($music as $song) {
+        //     $song->delete();
+        // }
+
+        // Delete the category record
         $category->delete();
 
         return redirect()->route('categories.index');
