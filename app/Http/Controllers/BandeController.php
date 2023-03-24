@@ -58,11 +58,12 @@ class BandeController extends Controller
         }
 
 
+        // dd($request);
 
         // Create new Bande instance and save to database
         $bande = new Bande;
         $bande->nom = $request->nom;
-        $bande->image = $request['image'];
+        $bande->image = $bandeImage;
         $bande->pays = $request->pays;
         $bande->date_creation = $request->date_creation;
         $bande->save();
@@ -109,14 +110,23 @@ class BandeController extends Controller
         // dd($request);
         // Save image file to storage
 
-        $imagePath = $request->file('image')->store('public/images/bandes');
+        // $imagePath = $request->file('image')->store('public/images/bandes');
+
+        if ($image = $request->file('image')) {
+            $destinationPath = 'images/bandes';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input['image'] = "$profileImage";
+        }
 
         // Update Bande instance in database
         $bande->nom = $request->nom;
-        $bande->image = $imagePath;
+        $bande->image = $profileImage;
         $bande->pays = $request->pays;
         $bande->date_creation = $request->date_creation;
         $bande->save();
+
+        // dd($bande);
 
         // Sync selected Artistes to the Bande
         $bande->artistes()->sync($request->artistes);
