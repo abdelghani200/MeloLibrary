@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('music_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedInteger('rating');
             $table->timestamps();
+
+            $table->foreign('music_id')->references('id')->on('musics')->onDelete('cascade');
+        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->date('date_sortie');
             $table->time('durée');
             $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

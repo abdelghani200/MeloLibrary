@@ -29,7 +29,7 @@
                                 @foreach($bandes as $bande)
                                 <tr>
                                     <td>{{ $bande->nom }}</td>
-                                    <td><img  src="/{{ $bande->image }}" style="width:70px;height:70px;border-radius: 50px;"></td>
+                                    <td><img  src="images/bandes/{{ $bande->image }}" style="width:70px;height:70px;border-radius: 50px;"></td>
                                     <td>{{ $bande->pays }}</td>
                                     <td>2</td>
                                     <td>{{ $bande->date_creation }}</td>

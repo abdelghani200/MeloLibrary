@@ -31,14 +31,17 @@
     <div class="col-lg-8">
       <h3 class="mb-3">Comments</h3>
       @foreach($comments as $comment)
-      
+
       <div class="card shadow-sm mb-3">
         <div class="card-body">
           <h5 class="card-title">Comment by <span style="color: blue;"> {{ $comment->user->name }} </span> </h5>
           <p class="card-text">{{ $comment->body }}</p>
+          <div class="card-text">
+            Rating: {{ $comment->rating }}/5
+          </div>
         </div>
       </div>
-      
+
       @endforeach
 
       @if(session('success'))
@@ -46,7 +49,7 @@
       @endif
       <div class="card shadow-sm mb-3">
         <div class="card-body">
-          <h5 class="card-title">Add Comment</h5>
+          <h5 class="card-title">Add Comment and Rating</h5>
           <form method="POST" action="{{ route('comments.store', ['music' => $music->id]) }}">
             @csrf
             <input type="hidden" name="music_id" value="{{ $music->id }}" />
@@ -54,6 +57,31 @@
             <div class="form-group">
               <label for="comment-textarea">Your comment:</label>
               <textarea class="form-control" id="comment-textarea" name="body" rows="4" placeholder="Enter your comment here..."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="rating">Your rating:</label>
+              <div class="rating" style="color: gold;">
+                <input type="radio" name="rating" value="5" id="star-5" />
+                <label for="star-5" title="5 stars">
+                  <i class="active fa fa-star"></i>
+                </label>
+                <input type="radio" name="rating" value="4" id="star-4" />
+                <label for="star-4" title="4 stars">
+                  <i class="active fa fa-star"></i>
+                </label>
+                <input type="radio" name="rating" value="3" id="star-3" />
+                <label for="star-3" title="3 stars">
+                  <i class="active fa fa-star"></i>
+                </label>
+                <input type="radio" name="rating" value="2" id="star-2" />
+                <label for="star-2" title="2 stars">
+                  <i class="active fa fa-star"></i>
+                </label>
+                <input type="radio" name="rating" value="1" id="star-1" />
+                <label for="star-1" title="1 star">
+                  <i class="active fa fa-star"></i>
+                </label>
+              </div>
             </div>
             <button type="submit" class="btn btn-primary mt-3">Submit</button>
           </form>

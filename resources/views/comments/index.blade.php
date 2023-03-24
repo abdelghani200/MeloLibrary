@@ -25,7 +25,7 @@
                                 <tbody>
                                     @foreach($comments as $comment)
                                     <tr>
-                                        <td>{{ ++$i }}</td>
+                                        <td>{{ $comment->id }}</td>
                                         <td>{{ $comment->body }}</td>
                                         <td>{{ $comment->created_at }}</td>
                                         <td>{{ $comment->user->name }}</td>

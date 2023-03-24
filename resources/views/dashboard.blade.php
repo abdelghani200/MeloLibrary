@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="card-body" style="height: 180px;">
                         <h5 class="card-title">All Categories</h5>
-                        <p class="card-text" style="position: absolute;top: 90px;font-size:2rem">10</p>
+                        <p class="card-text" style="position: absolute;top: 90px;font-size:2rem">{{ count($categorie) }}</p>
                         <div class="user">
                             <a href="{{ route('categories.index') }}" style="position: absolute;top: 90px;right: 20px;font-size:2rem"><i class="fa-solid fa-user"></i></a>
                         </div>
@@ -27,7 +27,7 @@
                 <div class="card">
                     <div class="card-body" style="height: 180px;">
                         <h5 class="card-title">All Music</h5>
-                        <p class="card-text" style="position: absolute;top: 90px;font-size:2rem">10</p>
+                        <p class="card-text" style="position: absolute;top: 90px;font-size:2rem">{{ count($music) }}</p>
                         <div class="user">
                             <a href="{{ route('musics.index') }}" style="position: absolute;top: 90px;right: 20px;font-size:2rem"><i class="fa-solid fa-music"></i></a>
                         </div>
@@ -38,7 +38,7 @@
                 <div class="card">
                     <div class="card-body" style="height: 180px;">
                         <h5 class="card-title">All Commentes</h5>
-                        <p class="card-text" style="position: absolute;top: 90px;font-size:2rem">10</p>
+                        <p class="card-text" style="position: absolute;top: 90px;font-size:2rem">{{ count($comments) }}</p>
                         <div class="user">
                             <a href="{{ route('comments.index') }}" style="position: absolute;top: 90px;right: 20px;font-size:2rem"><i class="fa-solid fa-comment"></i></a>
                         </div>
@@ -49,7 +49,7 @@
                 <div class="card">
                     <div class="card-body" style="height: 180px;">
                         <h5 class="card-title">All Artistes</h5>
-                        <p class="card-text" style="position: absolute;top: 90px;font-size:2rem">10</p>
+                        <p class="card-text" style="position: absolute;top: 90px;font-size:2rem">{{ count($artiste) }}</p>
                         <div class="user">
                             <a href="{{ route('artistes.index') }}" style="position: absolute;top: 90px;right: 20px;font-size:2rem"><i class="fa-solid fa-user"></i></a>
                         </div>
@@ -60,7 +60,7 @@
                 <div class="card">
                     <div class="card-body" style="height: 180px;">
                         <h5 class="card-title">All Bandes</h5>
-                        <p class="card-text" style="position: absolute;top: 90px;font-size:2rem">10</p>
+                        <p class="card-text" style="position: absolute;top: 90px;font-size:2rem">{{ count($bande) }}</p>
                         <div class="user">
                             <a href="{{ route('bandes.index') }}" style="position: absolute;top: 90px;right: 20px;font-size:2rem"><i class="fa-solid fa-people-group"></i></a>
                         </div>

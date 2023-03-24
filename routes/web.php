@@ -1,7 +1,12 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Models\Music;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Models\Artiste;
+use App\Models\Bande;
+use App\Models\Comment;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +21,12 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $categorie = Category::all();
+    $music = Music::all();
+    $bande = Bande::all();
+    $artiste = Artiste::all();
+    $comments = Comment::all();
+    return view('dashboard',compact('categorie','music','bande','artiste','comments'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -69,6 +79,10 @@ Route::post('/music/{id}/rate', [MusicController::class, 'rate'])->name('music.r
 
 
 
+
+// Route::get('/share-music/{id}', 'MusicController@share');
+
+Route::get('/download-music/{id}', 'MusicController@download');
 
 
 
