@@ -17,9 +17,9 @@ class CommentController extends Controller
     public function index()
     {
 
-        $comments = Comment::latest()->paginate(5);
+        $comments = Comment::latest()->get();
         // dd($comments);
-        return view('comments.index', compact('comments'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('comments.index', compact('comments'));
     }
 
 
@@ -39,10 +39,12 @@ class CommentController extends Controller
     {
         $validatedData = $request->validate([
             'body' => 'required|max:255',
+            'rating' => 'required|max:255',
         ]);
 
         $comment = new Comment([
             'body' => $validatedData['body'],
+            'rating' => $validatedData['rating'],
             'status' => 'pending'
         ]);
 
