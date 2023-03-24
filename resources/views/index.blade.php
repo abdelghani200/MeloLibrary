@@ -38,35 +38,24 @@
                                 </audio>
                                 <div class="d-flex justify-content-between mt-3">
                                     <div class="stars">
-                                        @for($i = 1; $i <= 5; $i++) @if($i <=$mu->avg_rating)
-                                            <i class="fas fa-star rated" data-rating="{{ $i }}"></i>
-                                            @else
-                                            <i class="far fa-star" data-rating="{{ $i }}"></i>
-                                            @endif
-                                            @endfor
-                                            <span style="color: gray;">Like (29)</span>
+                                        <div class="card-text">
+                                            @if($mu->comments->count() > 0)
+                                            @php $avgRating = $mu->comments->avg('rating'); @endphp
+                                            @for($i = 1; $i <= 5; $i++) @if($i <=$avgRating) <i class="fa fa-star" style="color:gold"></i>
+                                                @else
+                                                <i class="fa fa-star"></i>
+                                                @endif
+                                                @endfor
+                                                <span style="color: gray;">Rating ({{ $avgRating }}/5)</span>
+                                                @else
+                                                <span style="color: gray;">Aucun rating pour cette musique</span>
+                                                @endif
+                                        </div>
                                     </div>
                                     <div class="items_dy">
                                         <i class="fa-regular fa-share-from-square"></i><span style="color: gray;">Share(04)</span>
                                     </div>
                                 </div>
-
-                                <style>
-                                    .stars i {
-                                        color: gray;
-                                        transition: color 0.2s;
-                                        cursor: pointer;
-                                    }
-
-                                    .stars i:hover,
-                                    .stars i.active {
-                                        color: red;
-                                        /* background-color: red; */
-                                    }
-                                </style>
-
-                               
-
                             </div>
                         </div>
                     </div>
