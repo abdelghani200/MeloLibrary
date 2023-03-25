@@ -6,6 +6,7 @@ use App\Models\Bande;
 use App\Models\Artiste;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 
 class BandeController extends Controller
@@ -16,8 +17,12 @@ class BandeController extends Controller
     public function index()
     {
         $bandes = Bande::latest()->get();
+        $membres = DB::table('artiste_bande')
+             ->select('bande_id', DB::raw('count(*) as nombre_artistes'))
+             ->groupBy('bande_id')
+             ->get();
 
-        return view('bandes.index', compact('bandes'));
+        return view('bandes.index', compact('bandes','membres'));
     }
 
     /**
@@ -110,7 +115,6 @@ class BandeController extends Controller
         // dd($request);
         // Save image file to storage
 
-        // $imagePath = $request->file('image')->store('public/images/bandes');
 
         if ($image = $request->file('image')) {
             $destinationPath = 'images/bandes';
@@ -118,6 +122,7 @@ class BandeController extends Controller
             $image->move($destinationPath, $profileImage);
             $input['image'] = "$profileImage";
         }
+        
 
         // Update Bande instance in database
         $bande->nom = $request->nom;
