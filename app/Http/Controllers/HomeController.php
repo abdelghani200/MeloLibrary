@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Music;
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\Playlist;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -20,7 +21,7 @@ class HomeController extends Controller
         })->latest()->get();
 
 
-        return view('index', compact('categories','musicx','comment'));
+        return view('index', compact('categories','musicx','comment',));
     }
     
 
