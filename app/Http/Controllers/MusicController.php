@@ -29,7 +29,6 @@ class MusicController extends Controller
     }
 
 
-
     public function rechercher(Request $request)
     {
         $search = $request->get('search');
@@ -75,11 +74,11 @@ class MusicController extends Controller
             'langue' => 'required',
             'date_sortie' => 'required',
             'durée' => 'required',
+            'archived' => 'true'
 
         ]);
 
         $input = $request->all();
-        // var_dump($input);
 
         if ($image = $request->file('image')) {
             $destinationPath = 'images/music';
@@ -106,26 +105,23 @@ class MusicController extends Controller
     public function show(Music $music)
     {
         // return view('morceau', compact('music'));
+        $artistes = Artiste::where('id', $music->id)->get();
         $comments = Comment::where('id', $music->id)->get();
-        return view('morceau', compact('music', 'comments'));
+        return view('morceau', compact('music', 'comments', 'artistes'));
     }
 
-    public function rate($id, $stars)
+
+    public function archive(Music $music)
     {
-        $music = Music::findOrFail($id);
+    
+        if($music->archived != 1){
+        $music->update(['archived' => true]);
+        }else{
+            $music->update(['archived' => false]);
+        }
 
-        $rating = new Rating();
-        $rating->music_id = $music->id;
-        $rating->user_id = Auth::id();
-        $rating->rating = $stars;
-        $rating->save();
-
-        $music->avg_rating = $music->ratings()->avg('rating');
-        $music->save();
-
-        return redirect()->back();
+        return redirect()->route('musics.index')->with('success', 'Music archived successfully.');
     }
-
 
     public function showComments(Music $music)
     {
