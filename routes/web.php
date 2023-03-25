@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Models\Artiste;
 use App\Models\Bande;
 use App\Models\Comment;
+use App\Models\Playlist;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,7 @@ Route::get('/dashboard', function () {
     $artiste = Artiste::all();
     $comments = Comment::all();
     return view('dashboard',compact('categorie','music','bande','artiste','comments'));
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth','is_admin', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -58,7 +59,7 @@ Route::post('/register', [\App\Http\Controllers\Auth\RegisteredUserController::c
 
 Route::get('/search', [App\Http\Controllers\MusicController::class, 'rechercher'])->name('search');
 
-Route::resource('categories', \App\Http\Controllers\CategoryController::class);
+Route::resource('categories', \App\Http\Controllers\CategoryController::class)->middleware('is_admin');
 Route::resource('musics', \App\Http\Controllers\MusicController::class);
 
 Route::get('musics/{mu}', [\App\Http\Controllers\MusicController::class, 'show'])->name('music.show');
@@ -71,18 +72,18 @@ Route::post('/musics/{music}/comments', [\App\Http\Controllers\CommentController
 Route::get('/musics/{music}', [\App\Http\Controllers\MusicController::class, 'showComments'])->name('musics.show');
 
 
-Route::resource('artistes', \App\Http\Controllers\ArtisteController::class);
+Route::resource('artistes', \App\Http\Controllers\ArtisteController::class)->middleware('is_admin');
 
-Route::resource('bandes',\App\Http\Controllers\BandeController::class);
+Route::resource('bandes',\App\Http\Controllers\BandeController::class)->middleware('is_admin');
 
 Route::post('/music/{id}/rate', [MusicController::class, 'rate'])->name('music.rate');
 
 
 
+Route::post('/musics/{music}/archive', [\App\Http\Controllers\MusicController::class, 'archive'])->name('musics.archive');
 
-// Route::get('/share-music/{id}', 'MusicController@share');
 
-Route::get('/download-music/{id}', 'MusicController@download');
+
 
 
 
