@@ -9,7 +9,7 @@ class Music extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'langue', 'date_sortie', 'ecrivain', 'durée', 'artiste', 'category_id', 'image', 'audio'];
+    protected $fillable = ['title', 'langue', 'date_sortie', 'ecrivain', 'durée', 'artiste', 'category_id', 'image', 'audio','archived'];
 
     public function category()
     {
@@ -19,6 +19,10 @@ class Music extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+    public function playlists()
+    {
+        return $this->belongsToMany(Playlist::class);
     }
 
 

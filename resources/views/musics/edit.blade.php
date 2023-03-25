@@ -29,14 +29,14 @@
                                     <select name="artiste" class="form-select" id="artiste">
                                         <optgroup label="Artistes">
                                             @foreach ($artistes as $artiste)
-                                            <option value="{{ $artiste->id }}" {{ $artiste->id == $selectedArtist ? 'selected' : '' }}>
+                                            <option value="{{ $artiste->nom }}" {{ $artiste->id == $selectedArtist ? 'selected' : '' }}>
                                                 {{ $artiste->nom }}
                                             </option>
                                             @endforeach
                                         </optgroup>
                                         <optgroup label="Groupes">
                                             @foreach ($bandes as $bande)
-                                            <option value="{{ $bande->id }}" {{ $bande->id == $selectedArtist ? 'selected' : '' }}>
+                                            <option value="{{ $bande->nom }}" {{ $bande->id == $selectedArtist ? 'selected' : '' }}>
                                                 {{ $bande->nom }}
                                             </option>
                                             @endforeach
@@ -49,10 +49,10 @@
                                     <label for="audio" class="form-label">Audio:</label>
                                     <input type="file" name="audio" class="form-control" id="audio" placeholder="audio">
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="artiste">Artiste:</label>
                                     <input type="text" name="artiste" value="{{ $music->artiste }}" class="form-control" />
-                                </div>
+                                </div> -->
                                 <div class="form-group">
                                     <label for="image">Ecrivain:</label>
                                     <input type="text" name="ecrivain" value="{{ $music->ecrivain }}" class="form-control" />

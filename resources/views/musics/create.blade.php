@@ -49,12 +49,12 @@
                                     <select name="artiste" class="form-select" id="artiste">
                                         <optgroup label="Artistes">
                                             @foreach ($artistes as $artiste)
-                                            <option value="{{ $artiste->id }}">{{ $artiste->nom }}</option>
+                                            <option value="{{ $artiste->nom }}">{{ $artiste->nom }}</option>
                                             @endforeach
                                         </optgroup>
                                         <optgroup label="Groupes">
                                             @foreach ($bandes as $bande)
-                                            <option value="{{ $bande->id }}">{{ $bande->nom }}</option>
+                                            <option value="{{ $bande->nom }}">{{ $bande->nom }}</option>
                                             @endforeach
                                         </optgroup>
                                     </select>

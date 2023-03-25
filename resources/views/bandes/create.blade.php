@@ -17,7 +17,7 @@
                                 <input type="file" name="image" class="form-control" placeholder="image">
                             </div>
                             <div class="form-group">
-                                <label for="artistes">Bande:</label>
+                                <label for="artistes">Membres:</label>
                                 <select name="artistes[]" id="artistes" class="form-select" multiple>
                                     @foreach ($artistes as $artiste)
                                     <option value="{{ $artiste->id }}">{{ $artiste->nom }}</option>

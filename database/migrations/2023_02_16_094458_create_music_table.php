@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('artiste');
             $table->string('ecrivain');
             $table->string('langue');
+            $table->string('archived');
             $table->date('date_sortie');
             $table->time('durée');
             $table->unsignedBigInteger('category_id');

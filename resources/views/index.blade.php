@@ -21,6 +21,7 @@
 
             <div class="col-md-8">
                 @foreach ($musicx as $mu)
+                @if($mu->archived != 1)
 
                 <div class="card mb-4" style="height:200px;">
                     <div class="card-body" style="width: auto;">
@@ -32,7 +33,7 @@
                             </div>
                             <div class="col-md-8">
                                 <h2 class="card-title">{{ $mu->title }}</h2>
-                                <p class="card-text"><small class="text-muted">{{ date("M j, Y", strtotime($mu->created_at)); }} | </small> {{ floor($mu->duree_sec/60) }} : {{ gmdate("s", $mu->duree_sec) }} </p>
+                                <p class="card-text"><small class="text-muted">{{ date("M j, Y", strtotime($mu->created_at)); }} | </small> {{ ($mu->durée) }} </p>
                                 <audio controls style="width:100%;">
                                     <source src="/images/audio/{{ $mu->audio }}" type="audio/mpeg">
                                 </audio>
@@ -41,12 +42,13 @@
                                         <div class="card-text">
                                             @if($mu->comments->count() > 0)
                                             @php $avgRating = $mu->comments->avg('rating'); @endphp
+                                            @php $totalRating = $mu->comments->sum('rating'); @endphp
                                             @for($i = 1; $i <= 5; $i++) @if($i <=$avgRating) <i class="fa fa-star" style="color:gold"></i>
                                                 @else
                                                 <i class="fa fa-star"></i>
                                                 @endif
                                                 @endfor
-                                                <span style="color: gray;">Rating ({{ $avgRating }}/5)</span>
+                                                <span style="color: gray;">Rating ({{ ($avgRating) }}/5)</span>
                                                 @else
                                                 <span style="color: gray;">Aucun rating pour cette musique</span>
                                                 @endif
@@ -60,7 +62,7 @@
                         </div>
                     </div>
                 </div>
-
+                @endif
                 @endforeach
             </div>
 
@@ -86,7 +88,11 @@
                         </div>
                     </div>
                 </div>
+
             </div>
+
+
+
         </div>
     </div>
 </section>
