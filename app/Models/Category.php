@@ -9,5 +9,11 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description','image'];
+    protected $fillable = ['name', 'description', 'image'];
+
+    public function countMusics()
+    {
+        return $this->hasMany('App\Models\Music', 'category_id')->count();
+    }
+
 }
