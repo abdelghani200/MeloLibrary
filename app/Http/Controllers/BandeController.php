@@ -114,7 +114,7 @@ class BandeController extends Controller
          
         // dd($request);
         // Save image file to storage
-
+        $input = $request->all();
 
         if ($image = $request->file('image')) {
             $destinationPath = 'images/bandes';
@@ -125,15 +125,18 @@ class BandeController extends Controller
         
 
         // Update Bande instance in database
-        $bande->nom = $request->nom;
-        $bande->image = $profileImage;
-        $bande->pays = $request->pays;
-        $bande->date_creation = $request->date_creation;
-        $bande->save();
+        // $bande->nom = $request->nom;
+        // $bande->image = $request['image'];
+        // $bande->pays = $request->pays;
+        // $bande->date_creation = $request->date_creation;
+        // $bande->save();
 
         // dd($bande);
 
         // Sync selected Artistes to the Bande
+        
+        $bande->fill($input);
+        $bande->save();
         $bande->artistes()->sync($request->artistes);
 
         return redirect()->route('bandes.index')->with('success', 'Bande modifiée avec succès.');
