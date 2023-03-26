@@ -1,28 +1,29 @@
 @extends('layouts.app')
 
+<h1>show</h1>
 
-
-<div class="container my-5">
-  <div class="row justify-content-center">
+<div class="container my-5 mb-4">
+  <div class="row justify-content-center mt-5">
     <div class="col-lg-8">
       <div class="card shadow-sm">
         <div class="card-body">
           <div class="row">
             <div class="col-lg-6">
-              <h3 class="card-title">{{ $music->title }}</h3>
-              <p class="card-text">Artist: {{ $music->artiste }}</p>
-              <p class="card-text">Writer: {{ $music->ecrivain }}</p>
-              <p class="card-text">Language: {{ $music->langue }}</p>
-              <p class="card-text">Duration: {{ $music->durée }}</p>
-              <p class="card-text badge bg-success">Release Date: {{ $music->date_sortie }}</p>
-            </div>
-            <div class="col-lg-6">
-              <img class="card-img-top" src="/images/music/{{ $music->image }}" style="width: 100%; height: auto;" alt="{{ $music->title }}">
+              <h3 class="card-title" style="color: blue;">{{ $music->title }}</h3>
+              <p class="card-text"><strong>Artist:</strong> {{ $music->artiste }}</p>
+              <p class="card-text"><strong>Writer:</strong> {{ $music->ecrivain }}</p>
+              <p class="card-text"><strong>Language:</strong> {{ $music->langue }}</p>
+              <p class="card-text"><strong>Duration:</strong> {{ $music->durée }}</p>
+              <p class="card-text badge bg-success"><strong>Release Date:</strong> {{ $music->date_sortie }}</p>
               <audio controls class="mb-3 mt-3" style="width: 100%">
                 <source src="/images/audio/{{ $music->audio }}" type="audio/mpeg">
               </audio>
             </div>
+            <div class="col-lg-6">
+              <img class="card-img-top" src="/images/music/{{ $music->image }}" style="width: 100%; height: auto;" alt="{{ $music->title }}">
+            </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -91,3 +92,41 @@
   </div>
 
 </div>
+
+
+<style>
+.card-body {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.card-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.card-text strong {
+  font-weight: bold;
+}
+
+.card-text .badge {
+  font-size: 14px;
+  padding: 5px 8px;
+  border-radius: 20px;
+}
+
+audio {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.card-img-top {
+  border-radius: 10px;
+}
+</style>

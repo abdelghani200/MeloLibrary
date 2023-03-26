@@ -27,7 +27,8 @@ Route::get('/dashboard', function () {
     $bande = Bande::all();
     $artiste = Artiste::all();
     $comments = Comment::all();
-    return view('dashboard',compact('categorie','music','bande','artiste','comments'));
+    $musiques = Comment::orderBy('rating', 'desc')->get();
+    return view('dashboard',compact('categorie','music','bande','artiste','comments','musiques'));
 })->middleware(['auth','is_admin', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -43,13 +44,12 @@ Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->nam
 Route::view('/', 'accueil')->name('accueil');
 Route::view('/about', 'about')->name('about');
 Route::view('/contact', 'contact')->name('contact');
-// Route::view('/music', 'music')->name('music');
 
 
 
-Route::get('/music/{id}/rate/{stars}', [\App\Http\Controllers\MusicController::class, 'rate'])->name('music.rate');
 
-// Route::put('/comments/{comment}/approve', [\App\Http\Controllers\CommentController::class, 'approve'])->name('comments.approve');
+
+
 
 
 Route::get('/login', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'create'])->name('login');
@@ -76,7 +76,6 @@ Route::resource('artistes', \App\Http\Controllers\ArtisteController::class)->mid
 
 Route::resource('bandes',\App\Http\Controllers\BandeController::class)->middleware('is_admin');
 
-Route::post('/music/{id}/rate', [MusicController::class, 'rate'])->name('music.rate');
 
 
 

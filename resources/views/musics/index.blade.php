@@ -33,7 +33,7 @@
                                 <tbody>
                                     @foreach($musicx as $mu)
                                     <tr>
-                                        <td>{{ ++$i }}</td>
+                                        <td>{{ $mu->id }}</td>
                                         <td>{{ $mu->title }}</td>
                                         <td>{{ $mu->artiste }}</td>
                                         <td>{{ $mu->ecrivain }}</td>

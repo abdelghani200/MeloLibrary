@@ -23,9 +23,9 @@ class MusicController extends Controller
 
     public function index()
     {
-        $musicx = Music::latest()->paginate(5);
+        $musicx = Music::all();
 
-        return view('musics.index', compact('musicx'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('musics.index', compact('musicx'));
     }
 
 
@@ -39,10 +39,12 @@ class MusicController extends Controller
                 ->get();
             $categories = Category::all();
             return view('index', compact('categories', 'musicx', 'search'));
+            // return response()->json($musicx);
         } else {
             $musicx = Music::latest()->paginate(8);
             $categories = Category::all();
             return view('index', compact('musicx', 'categories'))->with('i', (request()->input('page', 1) - 1) * 5);
+            // return response()->json($musicx);
         }
     }
 
@@ -102,7 +104,7 @@ class MusicController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Music $music)
+    public function show(Music $music, Bande $bande)
     {
         // return view('morceau', compact('music'));
         $artistes = Artiste::where('id', $music->id)->get();

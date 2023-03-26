@@ -3,23 +3,40 @@
 
 <section class="mb-4">
 
-    <div class="container text-center">
-        <form id="search-form" action="{{ route('search') }}" method="GET">
-            <div class="input-group">
-                <div class="form-outline">
-                    <input type="search" id="search" class="form-control" placeholder="Search" name="search" />
-                </div>
-                <button type="submit" class="btn btn-info" style="height: 38px;">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </form>
-    </div>
 
     <div class="container">
-        <div class="row">
+        <div class="container text-center">
+            <form id="search-form" action="{{ route('search') }}" method="GET">
+                <div class="input-group">
+                    <div class="form-outline">
+                        <input type="search" id="search" class="form-control" placeholder="Search" name="search" />
+                    </div>
+                    <button type="submit" class="btn btn-info" style="height: 38px;">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
 
-            <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card my-4">
+                    <h5 class="card-header">All Music</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <ul class="list-unstyled mb-0">
+                                    @foreach($categories as $category)
+                                    <li><a href="{{ route('home') }}?category_id={{ $category->id }}"><small style="color: black;font-size:30px">{{ $category->name }} ({{ $category->countMusics() }}) </small></a></li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8" id="music-container">
                 @foreach ($musicx as $mu)
                 @if($mu->archived != 1)
 
@@ -65,32 +82,8 @@
                 @endif
                 @endforeach
             </div>
-
-            <!-- Pagination -->
-
-            <!-- Pagination -->
-            @if ($musicx instanceof Illuminate\Pagination\LengthAwarePaginator)
-            {{ $musicx->links() }}
-            @endif
-
-            <div class="col-md-4">
-                <div class="card my-4">
-                    <h5 class="card-header">All Music</h5>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <ul class="list-unstyled mb-0">
-                                    @foreach($categories as $category)
-                                    <li><a href="{{ route('home') }}?category_id={{ $category->id }}">{{ $category->name }}</a></li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
+            
+           
 
 
         </div>
