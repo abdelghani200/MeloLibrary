@@ -83,7 +83,9 @@
                 @endforeach
             </div>
             
-           
+           <div class="pagination">
+                {{ $musicx->links() }}
+           </div>
 
 
         </div>

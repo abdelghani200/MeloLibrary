@@ -18,8 +18,9 @@ class HomeController extends Controller
 
         $musicx = Music::when(request('category_id'),function($query) {
             $query->where('category_id', request('category_id'));
-        })->latest()->get();
-
+        })->latest()->paginate(8);
+        
+        dd($musicx->links());
 
         return view('index', compact('categories','musicx','comment',));
     }
